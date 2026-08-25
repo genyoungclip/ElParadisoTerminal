@@ -1,0 +1,14 @@
+El Paradiso Terminal turns your Android device into a real developer workstation.
+
+★ Full VT100 / xterm-256color terminal emulator
+★ bash, zsh, fish and Microsoft PowerShell 7 side-by-side
+★ APT-style package manager — one command installs Python, Node.js, Ruby,
+  Go, Rust, Java (OpenJDK 21), PHP, Perl, Lua, R, Julia, Clang, Git,
+  nginx, PostgreSQL, SQLite, ffmpeg, ImageMagick, tmux and 1500+ more
+★ Every package is served from the official mirror
+  https://elp.elparadisogonzalo.net — signed, reproducible, mirrored globally
+★ Material 3 UI with dark/light themes, extra-keys row and multi-session tabs
+★ Runs without root, without ads, without trackers
+★ Open source — GPL-3.0
+
+Homepage: https://elp.elparadisogonzalo.net

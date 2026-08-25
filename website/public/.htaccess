@@ -1,0 +1,35 @@
+# El Paradiso Terminal — Apache/cPanel hosting rules for elp.elparadisogonzalo.net
+Options -Indexes
+DirectoryIndex index.html
+
+# HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Correct MIME types
+AddType application/vnd.android.package-archive .apk
+AddType application/octet-stream               .aab
+AddType application/x-debian-package           .deb
+AddType application/pgp-signature              .gpg .asc
+AddType text/plain                             .sha256
+
+# CORS for the app's HTTPS fetches
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin  "*"
+  Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+  Header set X-Content-Type-Options       "nosniff"
+  Header set Strict-Transport-Security    "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Latest APK shortcuts → GitHub Releases
+RewriteRule ^download/latest$        https://github.com/elparadisogonzalo/elp-terminal/releases/latest [L,R=302]
+RewriteRule ^download/arm64-v8a$     https://github.com/elparadisogonzalo/elp-terminal/releases/latest/download/elp-terminal-arm64-v8a.apk     [L,R=302]
+RewriteRule ^download/armeabi-v7a$   https://github.com/elparadisogonzalo/elp-terminal/releases/latest/download/elp-terminal-armeabi-v7a.apk   [L,R=302]
+RewriteRule ^download/x86_64$        https://github.com/elparadisogonzalo/elp-terminal/releases/latest/download/elp-terminal-x86_64.apk        [L,R=302]
+RewriteRule ^download/universal$     https://github.com/elparadisogonzalo/elp-terminal/releases/latest/download/elp-terminal-universal.apk     [L,R=302]
+
+# Cache heavy artifacts
+<FilesMatch "\.(apk|aab|deb|zip)$">
+  Header set Cache-Control "public, max-age=86400"
+</FilesMatch>

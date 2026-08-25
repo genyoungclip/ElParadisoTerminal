@@ -1,0 +1,41 @@
+name: F-Droid Repo
+
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+jobs:
+  fdroid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install fdroidserver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fdroidserver
+
+      - name: Download release APKs
+        uses: robinraju/release-downloader@v1
+        with:
+          latest: true
+          fileName: "*.apk"
+          out-file-path: fdroid/repo
+
+      - name: Build F-Droid metadata
+        env:
+          FDROID_KEYSTORE_B64: ${{ secrets.FDROID_KEYSTORE_BASE64 }}
+          FDROID_KEYSTORE_PASSWORD: ${{ secrets.FDROID_KEYSTORE_PASSWORD }}
+          FDROID_KEY_ALIAS: ${{ secrets.FDROID_KEY_ALIAS }}
+        run: |
+          echo "$FDROID_KEYSTORE_B64" | base64 -d > fdroid/keystore.p12
+          cd fdroid
+          fdroid init --keystore keystore.p12 || true
+          fdroid update -c
+          fdroid update
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fdroid-repo
+          path: fdroid/repo

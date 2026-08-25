@@ -1,0 +1,51 @@
+name: Build Bootstrap Rootfs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * 0'   # weekly Sunday 05:00 UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [aarch64, arm, x86_64, i686]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cross tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            proot qemu-user-static debootstrap zip xz-utils curl
+
+      - name: Assemble bootstrap-${{ matrix.arch }}.zip
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: bash scripts/build-bootstrap.sh "$ARCH"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap-${{ matrix.arch }}
+          path: out/bootstrap-${{ matrix.arch }}.zip
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: out }
+      - name: Move to website
+        run: |
+          mkdir -p website/public/bootstrap
+          find out -name "bootstrap-*.zip" -exec cp {} website/public/bootstrap/ \;
+          cd website/public/bootstrap && sha256sum *.zip > SHA256SUMS
+      - name: Commit
+        run: |
+          git config user.name  "elp-bot"
+          git config user.email "bot@elparadisogonzalo.net"
+          git add website/public/bootstrap
+          git commit -m "chore(bootstrap): weekly refresh" || echo "nothing to commit"
+          git push

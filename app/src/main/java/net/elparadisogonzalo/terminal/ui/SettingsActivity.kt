@@ -1,0 +1,21 @@
+package net.elparadisogonzalo.terminal.ui
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceFragmentCompat
+import net.elparadisogonzalo.terminal.R
+
+class SettingsActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.settings_container, Fragment())
+            .commit()
+    }
+    class Fragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.preferences, rootKey)
+        }
+    }
+}

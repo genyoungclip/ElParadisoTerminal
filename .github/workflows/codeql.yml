@@ -1,0 +1,31 @@
+name: CodeQL
+
+on:
+  push: { branches: [ main ] }
+  pull_request: { branches: [ main ] }
+  schedule: [{ cron: '30 3 * * 2' }]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java-kotlin', 'cpp' ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with: { languages: ${{ matrix.language }} }
+      - uses: actions/setup-java@v4
+        with: { distribution: 'temurin', java-version: '17' }
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager --install "ndk;26.1.10909125" "cmake;3.22.1"
+      - name: Build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew --no-daemon assembleDebug
+      - uses: github/codeql-action/analyze@v3

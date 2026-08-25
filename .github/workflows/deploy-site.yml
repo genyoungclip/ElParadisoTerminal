@@ -1,0 +1,65 @@
+name: Deploy elp.elparadisogonzalo.net
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'website/**', 'scripts/build-repo.sh' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Build static site
+        run: |
+          cd website
+          mkdir -p public
+          cp -r * public/ 2>/dev/null || true
+
+      - name: Prepare CNAME
+        run: echo "elp.elparadisogonzalo.net" > website/public/CNAME
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/public
+
+  deploy-site:
+    needs: build-site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  deploy-cpanel:
+    needs: build-site
+    runs-on: ubuntu-latest
+    if: ${{ secrets.CPANEL_FTP_HOST != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: FTP deploy to elparadisogonzalo.net
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:   ${{ secrets.CPANEL_FTP_HOST }}
+          username: ${{ secrets.CPANEL_FTP_USER }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          local-dir: ./website/public/
+          server-dir: /public_html/elp/

@@ -1,0 +1,1 @@
+Full Linux terminal for Android — bash, zsh, PowerShell, apt & 1500+ packages.

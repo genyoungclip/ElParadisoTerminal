@@ -1,0 +1,2 @@
+package_name("net.elparadisogonzalo.terminal")
+json_key_file("play-service-account.json")

@@ -1,0 +1,31 @@
+# Gradle / Android
+.gradle/
+build/
+app/build/
+local.properties
+keystore.properties
+*.keystore
+*.jks
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artefacts
+out/
+*.apk
+*.aab
+*.sha256
+
+# Node (website)
+website/node_modules/
+website/.next/
+
+# Python bootstrap tooling
+__pycache__/
+*.pyc

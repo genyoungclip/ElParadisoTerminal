@@ -1,0 +1,26 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build a signed release AAB"
+  lane :build do
+    gradle(task: "clean bundleRelease")
+  end
+
+  desc "Push to Google Play internal track"
+  lane :internal do
+    build
+    upload_to_play_store(
+      track: "internal",
+      aab:   "app/build/outputs/bundle/release/app-release.aab",
+      json_key_data: ENV["PLAY_SERVICE_ACCOUNT_JSON"]
+    )
+  end
+
+  desc "Promote latest internal build to production"
+  lane :promote do
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "production"
+    )
+  end
+end

@@ -1,0 +1,31 @@
+name: APT Repository Refresh
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'scripts/build-repo.sh', 'packages/**' ]
+  schedule: [{ cron: '0 6 * * *' }]
+  workflow_dispatch:
+
+jobs:
+  build-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dpkg tools
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev gnupg apt-utils
+      - name: Import signing key
+        env: { GPG_KEY: '${{ secrets.APT_GPG_PRIVATE }}' }
+        run: |
+          echo "$GPG_KEY" | gpg --batch --import
+      - name: Build & sign repo
+        run: bash scripts/build-repo.sh
+      - name: Deploy repo to elp.elparadisogonzalo.net
+        if: ${{ secrets.CPANEL_FTP_HOST != '' }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:   ${{ secrets.CPANEL_FTP_HOST }}
+          username: ${{ secrets.CPANEL_FTP_USER }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          local-dir: ./website/public/apt/
+          server-dir: /public_html/elp/apt/

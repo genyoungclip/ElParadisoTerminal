@@ -1,0 +1,7 @@
+v1.0.0 (2026-08-19)
+- First public release.
+- bash / zsh / fish / PowerShell 7 shells.
+- apt / dpkg package manager backed by elp.elparadisogonzalo.net.
+- Bootstrap rootfs auto-downloaded on first launch.
+- Material 3 UI, extra-keys row, multi-session support.
+- Full Kotlin + JNI rewrite over the Termux terminal-view core.

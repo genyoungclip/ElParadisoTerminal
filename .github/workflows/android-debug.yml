@@ -1,0 +1,42 @@
+name: Android Debug Build
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - '*.gradle*'
+      - 'settings.gradle.kts'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with: { distribution: 'temurin', java-version: '17', cache: 'gradle' }
+
+      - uses: android-actions/setup-android@v3
+
+      - run: sdkmanager --install "ndk;26.1.10909125" "cmake;3.22.1"
+
+      - name: Grant gradlew
+        run: chmod +x ./gradlew
+
+      - name: Lint
+        run: ./gradlew --no-daemon lintDebug
+
+      - name: Unit tests
+        run: ./gradlew --no-daemon testDebugUnitTest
+
+      - name: Assemble debug
+        run: ./gradlew --no-daemon assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debug-apks
+          path: app/build/outputs/apk/debug/*.apk

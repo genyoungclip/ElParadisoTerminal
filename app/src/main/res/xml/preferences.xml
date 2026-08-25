@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Appearance">
+        <ListPreference
+            android:key="theme"
+            android:title="Theme"
+            android:defaultValue="dark"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"/>
+        <SeekBarPreference
+            android:key="font_size"
+            android:title="Font size (sp)"
+            android:defaultValue="14"
+            android:max="32"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Shell">
+        <ListPreference
+            android:key="default_shell"
+            android:title="Default shell"
+            android:defaultValue="bash"
+            android:entries="@array/shell_entries"
+            android:entryValues="@array/shell_values"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Repository">
+        <EditTextPreference
+            android:key="repo_url"
+            android:title="APT mirror"
+            android:defaultValue="https://elp.elparadisogonzalo.net/apt/"/>
+        <EditTextPreference
+            android:key="bootstrap_url"
+            android:title="Bootstrap mirror"
+            android:defaultValue="https://elp.elparadisogonzalo.net/bootstrap/"/>
+    </PreferenceCategory>
+</PreferenceScreen>

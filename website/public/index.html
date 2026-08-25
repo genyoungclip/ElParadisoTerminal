@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El Paradiso Terminal — Android terminal & shell for developers</title>
+  <meta name="description" content="A full-featured Android terminal emulator with apt package manager, PowerShell, and every major programming language."/>
+  <meta property="og:title"       content="El Paradiso Terminal"/>
+  <meta property="og:description" content="Termux-compatible • PowerShell-ready • 1500+ packages."/>
+  <meta property="og:url"         content="https://elp.elparadisogonzalo.net"/>
+  <meta property="og:image"       content="https://elp.elparadisogonzalo.net/assets/hero.png"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="brand">
+    <img src="/assets/logo.svg" alt="" width="34" height="34"/>
+    <span>El Paradiso <b>Terminal</b></span>
+  </a>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+    <a href="#packages">Packages</a>
+    <a href="/docs/">Docs</a>
+    <a href="https://github.com/elparadisogonzalo/elp-terminal">GitHub</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Your Android is a <span class="grad">real Linux workstation</span>.</h1>
+    <p class="lead">
+      El Paradiso Terminal ships bash, zsh, fish and Microsoft PowerShell 7 in
+      one app — with an <code>apt</code> package manager that installs Python,
+      Node.js, Rust, Go, Java, PHP, Ruby, Clang and 1500+ more packages, all
+      served from this domain.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="/download/latest">⬇ Download APK</a>
+      <a class="btn"         href="https://github.com/elparadisogonzalo/elp-terminal">★ Star on GitHub</a>
+    </div>
+    <pre class="term"><span class="p">elp@android:~$</span> pkg install python nodejs rust powershell
+<span class="c">✓ Installed 4 packages, 128 MB</span>
+<span class="p">elp@android:~$</span> pwsh
+<span class="c">PowerShell 7.4.4 on Linux</span>
+PS /data/data/net.elparadisogonzalo.terminal/files/home> _</pre>
+  </div>
+</section>
+
+<section id="features" class="features">
+  <h2>Everything a terminal should be</h2>
+  <div class="grid">
+    <div class="card"><h3>🖥️ Full VT100</h3><p>256-color xterm compatible, true-color, mouse & touch, Unicode.</p></div>
+    <div class="card"><h3>📦 apt package manager</h3><p>1500+ packages built for arm64, armv7, x86_64 & i686.</p></div>
+    <div class="card"><h3>🐚 Multi-shell</h3><p>bash, zsh, fish and Microsoft PowerShell 7 out of the box.</p></div>
+    <div class="card"><h3>🐍 Every language</h3><p>Python, Node.js, Ruby, Go, Rust, Java 21, PHP, Perl, Lua, R, Julia.</p></div>
+    <div class="card"><h3>🔐 Signed builds</h3><p>Reproducible APKs signed via GitHub Actions, checksummed on release.</p></div>
+    <div class="card"><h3>❤️ Open source</h3><p>GPL-3.0. Fork it, mirror it, ship your own distro.</p></div>
+  </div>
+</section>
+
+<section id="install" class="install">
+  <h2>Install in 30 seconds</h2>
+  <div class="steps">
+    <div><span>1</span><p>Download the APK for your device architecture.</p>
+      <div class="dl">
+        <a class="btn" href="/download/arm64-v8a">arm64-v8a</a>
+        <a class="btn" href="/download/armeabi-v7a">armeabi-v7a</a>
+        <a class="btn" href="/download/x86_64">x86_64</a>
+        <a class="btn" href="/download/universal">Universal</a>
+      </div>
+    </div>
+    <div><span>2</span><p>Allow install from unknown sources, then open the file.</p></div>
+    <div><span>3</span><p>Launch <b>El Paradiso Terminal</b>. Bootstrap downloads automatically from this domain.</p></div>
+    <div><span>4</span><p>Run <code>pkg install &lt;whatever&gt;</code>. Done.</p></div>
+  </div>
+</section>
+
+<section id="packages" class="packages">
+  <h2>1500+ packages</h2>
+  <p class="lead">Pulled from <code>https://elp.elparadisogonzalo.net/apt/</code> — signed with GPG key <code>0xELP…</code>.</p>
+  <ul class="pkg-grid">
+    <li>python</li><li>nodejs</li><li>ruby</li><li>golang</li><li>rust</li>
+    <li>openjdk-21</li><li>php</li><li>perl</li><li>lua</li><li>julia</li>
+    <li>r-base</li><li>clang</li><li>powershell</li><li>zsh</li><li>fish</li>
+    <li>git</li><li>vim</li><li>neovim</li><li>tmux</li><li>ffmpeg</li>
+    <li>imagemagick</li><li>sqlite</li><li>postgresql</li><li>nginx</li>
+    <li>curl</li><li>wget</li><li>openssh</li><li>docker</li><li>kubectl</li>
+    <li>ansible</li><li>terraform</li><li>gh</li>
+  </ul>
+</section>
+
+<footer>
+  <p>© 2026 El Paradiso Gonzalo — GPL-3.0 — <a href="mailto:contact@elparadisogonzalo.net">contact@elparadisogonzalo.net</a></p>
+  <p><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/apt/">APT repo</a> · <a href="/bootstrap/">Bootstrap</a></p>
+</footer>
+
+</body>
+</html>

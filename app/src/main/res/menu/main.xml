@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_new_session"
+        android:title="@string/menu_new_session"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_pwsh"
+        android:title="@string/menu_pwsh"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_zsh"
+        android:title="@string/menu_zsh"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_packages"
+        android:title="@string/menu_packages"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/menu_settings"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_homepage"
+        android:title="@string/menu_homepage"
+        app:showAsAction="never"/>
+</menu>

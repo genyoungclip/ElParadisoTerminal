@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_entries">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Follow system</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>dark</item>
+        <item>light</item>
+        <item>system</item>
+    </string-array>
+    <string-array name="shell_entries">
+        <item>bash</item>
+        <item>zsh</item>
+        <item>fish</item>
+        <item>PowerShell (pwsh)</item>
+        <item>sh</item>
+    </string-array>
+    <string-array name="shell_values">
+        <item>bash</item>
+        <item>zsh</item>
+        <item>fish</item>
+        <item>pwsh</item>
+        <item>sh</item>
+    </string-array>
+</resources>
