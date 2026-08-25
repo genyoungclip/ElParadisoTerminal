@@ -1,0 +1,66 @@
+name: Build ElParadisoTerminal APK
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Make Gradle executable
+        run: chmod +x android/gradlew
+
+      - name: Verify Android project
+        working-directory: android
+        run: ./gradlew --version
+
+      - name: Build Debug APK
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Locate APK
+        run: |
+          echo "Generated APKs:"
+          find android/app/build/outputs/apk -type f -name "*.apk" -print
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: ELP-Terminal-${{ github.sha }}-release
+          path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 14
